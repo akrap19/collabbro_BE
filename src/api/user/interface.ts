@@ -2,6 +2,12 @@ import { AsyncResponse, IServiceMethod, ResponseCode } from '../../interface'
 import { AuthType } from '../auth/interface'
 import { User } from './userModel'
 
+export enum SkillLevel {
+  BEGINNER = 'Begginer',
+  INTERMEDIATE = 'Seeking help',
+  ADVANCED = 'Advanced'
+}
+
 export interface ICreateUser extends IServiceMethod {
   email: string
   password?: string
@@ -24,12 +30,13 @@ export interface IGetUserByEmailAndAuthType {
 
 export interface UserSkill {
   userId: string
-  skillId: string
+  skillName: string
+  skillLevel: SkillLevel
 }
 
 export interface IFinishOnboarding {
   userId: string
-  skills: string[]
+  skills: UserSkill[]
   professions: string[]
   instruments: string[]
   daw: string

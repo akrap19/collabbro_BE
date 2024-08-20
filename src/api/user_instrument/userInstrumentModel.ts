@@ -17,14 +17,14 @@ export class UserInstrument {
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   userId!: string
 
   @ManyToOne(() => User, { onDelete: 'CASCADE', eager: true })
   @JoinColumn({ name: 'user_id' })
   user!: User
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   instrumentId!: string
 
   @ManyToOne(() => Instrument, { onDelete: 'CASCADE', eager: true })

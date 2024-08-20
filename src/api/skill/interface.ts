@@ -1,6 +1,17 @@
 import { AsyncResponse, IServiceMethod, ResponseCode } from '../../interface'
 import { Skill } from './skillModel'
 
+export interface ISkillData {
+  skillName: string
+  skillLevel: SkillLevel
+}
+
+export enum SkillLevel {
+  BEGINNER = 'Begginer',
+  INTERMEDIATE = 'Seeking help',
+  ADVANCED = 'Advanced'
+}
+
 export interface ICheckSkill extends IServiceMethod {
   skillName: string
 }
@@ -10,7 +21,7 @@ export interface ICreateSkill extends IServiceMethod {
 }
 
 export interface IHandleSkillsOnboarding extends IServiceMethod {
-  skills: string[]
+  skills: ISkillData[]
   userId: string
 }
 

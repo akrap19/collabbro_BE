@@ -41,9 +41,12 @@ export class CollaborationService implements ICollaborationService {
   createCollaboration = async ({
     projectId,
     collaboratorId,
-    amount
+    amount,
+    reasonToCollaborate,
+    inDeadline
   }: ICrateCollaboration) => {
     let code: ResponseCode = ResponseCode.OK
+    const queryRunner = AppDataSource.createQueryRunner()
 
     try {
       const { project, code } = await projectService.getProjectById({
@@ -54,17 +57,25 @@ export class CollaborationService implements ICollaborationService {
         return { code: ResponseCode.PROJECT_NOT_FOUND }
       }
 
-      const collaboration = {
-        collaboratorId,
-        ownerId: project.userId,
-        collaborationStatus: CollaborationStatus.REQUEST_SENT,
-        amount
-      }
+      await queryRunner.connect()
+      await queryRunner.startTransaction()
+      let insertResult = await this.collaborationRepository
+        .createQueryBuilder('payment', queryRunner)
+        .insert()
+        .into(Collaboration)
+        .values([
+          {
+            collaboratorId,
+            ownerId: project.userId,
+            collaborationStatus: CollaborationStatus.REQUEST_SENT,
+            amount,
+            reasonToCollaborate,
+            inDeadline
+          }
+        ])
+        .execute()
 
-      const newCollaboration =
-        await this.collaborationRepository.save(collaboration)
-
-      if (!newCollaboration) {
+      if (insertResult.raw.affectedRows !== 1) {
         return { code: ResponseCode.FAILED_INSERT }
       }
 
@@ -72,12 +83,13 @@ export class CollaborationService implements ICollaborationService {
 
       await notificationService.createNotification({
         message,
-        receiverId: newCollaboration.ownerId,
-        type: NotificationType.ADDED_TO_FAVORITES,
-        senderId: collaboratorId
+        receiverId: project.userId,
+        type: NotificationType.COLLABORATION_REQUEST,
+        senderId: collaboratorId,
+        queryRunner
       })
 
-      return { newCollaboration, code }
+      return { code }
     } catch (err: any) {
       code = ResponseCode.SERVER_ERROR
       logger.error({
@@ -94,7 +106,8 @@ export class CollaborationService implements ICollaborationService {
     collaborationId,
     ownerId,
     collaborationStatus,
-    profileHandle
+    profileHandle,
+    inDeadline
   }: IUpdateCollaboration) => {
     let code: ResponseCode = ResponseCode.OK
     const queryRunner = AppDataSource.createQueryRunner()
@@ -208,8 +221,9 @@ export class CollaborationService implements ICollaborationService {
             await queryRunner.release()
             return { code: checkPaymentCodeOnTermination }
           }
-          const { data: voidedOrder, code: voidOrderCode } =
-            await voidAuthorization(payment.authorizationId)
+          const { code: voidOrderCode } = await voidAuthorization(
+            payment.authorizationId
+          )
           if (voidOrderCode !== ResponseCode.OK) {
             await queryRunner.rollbackTransaction()
             await queryRunner.release()
@@ -236,7 +250,8 @@ export class CollaborationService implements ICollaborationService {
         .createQueryBuilder('collaboration', queryRunner)
         .update(Collaboration)
         .set({
-          collaborationStatus
+          collaborationStatus,
+          inDeadline
         })
         .where('collaboration.id = :collaborationId', { collaborationId })
         .execute()

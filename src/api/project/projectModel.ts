@@ -51,7 +51,7 @@ export class Project {
   @Column({ type: 'integer', default: 0 })
   views: number
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   userId!: string
 
   @ManyToOne(() => User, { onDelete: 'CASCADE', eager: true })

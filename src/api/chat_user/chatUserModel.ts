@@ -22,7 +22,7 @@ export class ChatUser {
   @JoinColumn({ name: 'chat_id' })
   chat!: Chat
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   userId!: string
 
   @ManyToOne(() => User, { onDelete: 'CASCADE', eager: true })

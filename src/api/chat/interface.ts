@@ -31,7 +31,11 @@ export interface IDeleteChat {
 export interface IChatService {
   createChat(params: ICreateChat): AsyncResponse<ResponseCode>
   getChatById(params: IGetChatById): AsyncResponse<Chat>
-  getChatsForUser(params: IGetChatsForUser): AsyncResponse<IGetChatsForUserResponse>
-  markAsUnreadChatForUser(params: IMarkAsUnreadChatForUser): AsyncResponse<ResponseCode>
+  getChatsForUser(
+    params: IGetChatsForUser
+  ): AsyncResponse<IGetChatsForUserResponse>
+  markAsUnreadChatForUser(
+    params: IMarkAsUnreadChatForUser
+  ): AsyncResponse<ResponseCode>
   deleteChat(params: IDeleteChat): AsyncResponse<ResponseCode>
 }

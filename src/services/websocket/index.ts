@@ -41,37 +41,41 @@ export class WebSocketService {
   async subscribeToChat(channelId: string) {
     this.websocket.on('connection', (ws: WebSocket) => {
       ws.on(channelId, async (message: string) => {
-        const data: IMessageData = JSON.parse(message);
-        const { content, bearerToken } = data;
+        const data: IMessageData = JSON.parse(message)
+        const { content, bearerToken } = data
 
         try {
-          const decodedToken = await verifyToken<any>(bearerToken, TokenType.ACCESS_TOKEN);
+          const decodedToken = await verifyToken<any>(
+            bearerToken,
+            TokenType.ACCESS_TOKEN
+          )
 
-          const { data: inChat, code } = await chatUserService.checkIfUserIsInChat({
-            senderId: decodedToken.userId,
-            chatId: channelId,
-          });
+          const { data: inChat, code } =
+            await chatUserService.checkIfUserIsInChat({
+              senderId: decodedToken.userId,
+              chatId: channelId
+            })
 
           if (code !== ResponseCode.OK) {
-            ws.send('Error checking if user is in chat');
-            return;
+            ws.send('Error checking if user is in chat')
+            return
           }
 
           if (inChat) {
             await messageService.createMessage({
               chatId: channelId,
               content,
-              senderId: decodedToken.userId,
-            });
-            ws.send('Message sent!');
+              senderId: decodedToken.userId
+            })
+            ws.send('Message sent!')
           } else {
-            ws.send('You are not part of the chat');
+            ws.send('You are not part of the chat')
           }
         } catch (error: any) {
-          ws.send(`Error processing message: ${error.message}`);
+          ws.send(`Error processing message: ${error.message}`)
         }
-      });
-    });
+      })
+    })
   }
 
   close() {

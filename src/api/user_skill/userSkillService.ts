@@ -18,6 +18,7 @@ export class UserSkillService implements IUserSkillService {
   createUserSkill = async ({
     userId,
     skillId,
+    skillLevel,
     queryRunner
   }: ICreateUserSkill) => {
     let code: ResponseCode = ResponseCode.OK
@@ -30,7 +31,8 @@ export class UserSkillService implements IUserSkillService {
         .values([
           {
             userId,
-            skillId
+            skillId,
+            skillLevel
           }
         ])
         .execute()

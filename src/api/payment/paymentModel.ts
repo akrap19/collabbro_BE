@@ -5,15 +5,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   JoinColumn,
-  ManyToOne,
-  Unique
+  ManyToOne
 } from 'typeorm'
 import { Project } from '../project/projectModel'
 import { PaymentStatus } from './interface'
 import { Collaboration } from '../collaboration/collaborationModel'
 
 @Entity()
-@Unique(['ownerId', 'collaboratorId', 'projectId'])
 export class Payment {
   @PrimaryGeneratedColumn('uuid')
   id!: string
@@ -34,14 +32,14 @@ export class Payment {
   @JoinColumn({ name: 'collaboration_id' })
   collaboration!: Collaboration
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   collaborationId!: string
 
   @ManyToOne(() => Project, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'project_id' })
   project!: Project
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   projectId!: string
 
   @CreateDateColumn({

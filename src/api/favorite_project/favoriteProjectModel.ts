@@ -21,14 +21,14 @@ export class FavoriteProject {
   @JoinColumn({ name: 'project_id' })
   project!: Project
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   projectId!: string
 
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user!: User
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   userId!: string
 
   @CreateDateColumn({

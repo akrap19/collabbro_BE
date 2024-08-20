@@ -14,7 +14,7 @@ export class Message {
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   senderId!: string
 
   @Column({ type: 'varchar' })
@@ -24,7 +24,7 @@ export class Message {
   @JoinColumn({ name: 'chat_id' })
   chat!: Chat
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   chatId!: string
 
   @Column({ type: 'boolean', default: false })

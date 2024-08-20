@@ -14,12 +14,12 @@ export interface IMarkAsUnreadChatUser {
 }
 export interface IDeleteChatUser {
   chatId: string
-   userId: string
+  userId: string
 }
 
 export interface ICheckIfUserIsInChat {
   chatId: string
-   senderId: string
+  senderId: string
 }
 
 export interface IGetChatsForUserResponse {

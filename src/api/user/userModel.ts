@@ -56,6 +56,9 @@ export class User {
   @Column({ type: 'integer', default: 0 })
   storageUsage: number
 
+  @Column({ type: 'varchar' })
+  about!: string
+
   @OneToMany(() => Project, (project) => project.user)
   projects?: Project[]
 

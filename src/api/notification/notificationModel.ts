@@ -15,14 +15,14 @@ export class Notification {
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   senderId!: string
 
   @ManyToOne(() => User, { onDelete: 'CASCADE', eager: true })
   @JoinColumn({ name: 'sender_id' })
   sender!: User
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   receiverId!: string
 
   @ManyToOne(() => User, { onDelete: 'CASCADE', eager: true })

@@ -99,13 +99,30 @@ export class NotificationService implements INotificationService {
     receiverId,
     senderId,
     message,
-    type
+    type,
+    queryRunner
   }: ICreateNotification) => {
     let code: ResponseCode = ResponseCode.OK
 
     try {
-      const notification = { receiverId, senderId, message, read: false, type }
-      await this.notificationRepository.save(notification)
+      let insertResult = await this.notificationRepository
+        .createQueryBuilder('notification', queryRunner)
+        .insert()
+        .into(Notification)
+        .values([
+          {
+            receiverId,
+            senderId,
+            message,
+            read: false,
+            notificationType: type
+          }
+        ])
+        .execute()
+
+      if (insertResult.raw.affectedRows !== 1) {
+        return { code: ResponseCode.FAILED_INSERT }
+      }
 
       const { user, code } = await userService.getUserById({
         userId: receiverId

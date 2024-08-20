@@ -13,7 +13,7 @@ export class Goal {
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
-  @Column({ type: 'varchar', length: 20, unique: true })
+  @Column({ type: 'varchar', unique: true })
   goalContent: string
 
   @Column({ type: 'boolean', default: true })

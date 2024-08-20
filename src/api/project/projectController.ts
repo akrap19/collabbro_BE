@@ -22,7 +22,7 @@ export class ProjectController {
       currencyCode,
       totalAmount,
       instrumentIds,
-      skillIds,
+      skills,
       mediaFiles
     } = res.locals.input
 
@@ -39,7 +39,7 @@ export class ProjectController {
         currencyCode,
         totalAmount,
         instrumentIds,
-        skillIds,
+        skills,
         mediaFiles,
         profileHandle: profileHandle ? profileHandle : email
       })

@@ -133,9 +133,15 @@ const definitions = {
         'dfd01fe1-c113-4c8b-919b-e23f74e21299',
         'a3cdcce4-bb9e-419f-b0d6-d8a1176cb155'
       ],
-      skillIds: [
-        '25b1a554-b603-42dd-ab70-a14d38e4a7ea',
-        '686858f9-ecb3-4a35-bda3-5bfa86ca071f'
+      skills: [
+        {
+          id: '25b1a554-b603-42dd-ab70-a14d38e4a7ea',
+          skillLevel: 'Advanced'
+        },
+        {
+          id: '686858f9-ecb3-4a35-bda3-5bfa86ca071f',
+          skillLevel: 'Begginer'
+        }
       ],
       mediaFiles: [
         {

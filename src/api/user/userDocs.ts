@@ -160,7 +160,10 @@ const definitions = {
       profileHandle: 'profileHandle',
       country: 'USA',
       language: 'English',
-      skills: ['Producing', 'Keyboard'],
+      skills: [
+        { skill: 'Producing', skillLevel: 'Advanced' },
+        { skill: 'Keyboard', level: 'Begginer' }
+      ],
       professions: ['Drummer', 'Bass player'],
       instruments: ['Guitar', 'Banjo'],
       daws: ['FL Studio', 'Garageband'],

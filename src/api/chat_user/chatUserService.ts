@@ -132,7 +132,8 @@ export class ChatUserService implements IChatUserService {
     try {
       const chatUser = await this.chatUserRepository.findOne({
         where: {
-          userId, chatId
+          userId,
+          chatId
         }
       })
 
@@ -161,7 +162,8 @@ export class ChatUserService implements IChatUserService {
     try {
       const chatUser = await this.chatUserRepository.findOne({
         where: {
-          userId: senderId, chatId
+          userId: senderId,
+          chatId
         }
       })
 

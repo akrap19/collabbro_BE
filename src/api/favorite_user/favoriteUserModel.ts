@@ -5,7 +5,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Unique,
-  ManyToOne
+  ManyToOne,
+  JoinColumn
 } from 'typeorm'
 import { User } from '../user/userModel'
 
@@ -15,13 +16,15 @@ export class FavoriteUser {
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
+  @JoinColumn({ name: 'owner_id' })
   ownerId!: string
 
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'user_id' })
   user!: User
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   userId!: string
 
   @CreateDateColumn({

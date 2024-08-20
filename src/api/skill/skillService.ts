@@ -112,15 +112,15 @@ export class SkillService implements ISkillService {
   }: IHandleSkillsOnboarding) => {
     let code: ResponseCode = ResponseCode.OK
     try {
-      for (const skillName of skills) {
+      for (const skill of skills) {
         let { skillId, code } = await this.checkSkill({
-          skillName,
+          skillName: skill.skillName,
           queryRunner
         })
 
         if (!skillId) {
           const { skillId: newSkillId, code: skillCode } =
-            await this.createSkill({ skillName, queryRunner })
+            await this.createSkill({ skillName: skill.skillName, queryRunner })
 
           if (!newSkillId) {
             code = skillCode
@@ -134,6 +134,7 @@ export class SkillService implements ISkillService {
           await userSkillService.createUserSkill({
             userId,
             skillId,
+            skillLevel: skill.skillLevel,
             queryRunner
           })
 

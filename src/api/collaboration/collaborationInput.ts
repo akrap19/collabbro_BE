@@ -10,12 +10,16 @@ export const createCollaborationSchema = (req: Request) => {
             /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/
           )
           .required(),
-        amount: Joi.number().required()
+        amount: Joi.number().required(),
+        reasonToCollaborate: Joi.string().required(),
+        inDeadline: Joi.boolean().optional()
       })
       .options({ abortEarly: false }),
     input: {
       projectId: req.body.projectId,
-      amount: req.body.amount
+      amount: req.body.amount,
+      reasonToCollaborate: req.body.reasonToCollaborate,
+      inDeadline: req.body.inDeadline
     }
   }
 }
@@ -31,12 +35,14 @@ export const sendCollaborationResponseSchema = (req: Request) => {
           .required(),
         collaborationStatus: Joi.string()
           .valid('Request approved', 'Request declined')
-          .required()
+          .required(),
+        inDeadline: Joi.boolean().optional()
       })
       .options({ abortEarly: false }),
     input: {
       collaborationId: req.params.collaborationId,
-      collaborationStatus: req.body.collaborationStatus
+      collaborationStatus: req.body.collaborationStatus,
+      inDeadline: req.body.inDeadline
     }
   }
 }

@@ -44,7 +44,7 @@ export class ProjectService implements IProjectService {
     currencyCode,
     totalAmount,
     instrumentIds,
-    skillIds,
+    skills,
     mediaFiles,
     profileHandle
   }: ICreateProject) => {
@@ -115,7 +115,7 @@ export class ProjectService implements IProjectService {
       }
       const { code: skillode } = await projectSkillService.createProjectSkills({
         projectId,
-        skillIds,
+        skills,
         queryRunner
       })
       if (skillode !== ResponseCode.OK) {

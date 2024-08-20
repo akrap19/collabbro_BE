@@ -1,5 +1,6 @@
 import { Request } from 'express'
 import Joi from 'joi'
+import { SkillLevel } from '../user_skill/interface'
 
 export const createProjectSchema = (req: Request) => {
   return {
@@ -24,13 +25,18 @@ export const createProjectSchema = (req: Request) => {
               .required()
           )
           .required(),
-        skillIds: Joi.array()
+        skills: Joi.array()
           .items(
-            Joi.string()
-              .regex(
-                /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/
-              )
-              .required()
+            Joi.object().keys({
+              id: Joi.string()
+                .regex(
+                  /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/
+                )
+                .required(),
+              level: Joi.string()
+                .valid(...Object.values(SkillLevel))
+                .required()
+            })
           )
           .required(),
         mediaFiles: Joi.array()
@@ -51,7 +57,7 @@ export const createProjectSchema = (req: Request) => {
       deadline: req.body.deadline,
       tags: req.body.tags,
       instrumentIds: req.body.instrumentIds,
-      skillIds: req.body.skillIds,
+      skills: req.body.skills,
       mediaFiles: req.body.mediaFiles
     }
   }

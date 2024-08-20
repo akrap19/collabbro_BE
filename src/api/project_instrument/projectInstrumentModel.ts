@@ -17,14 +17,14 @@ export class ProjectInstrument {
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   projectId!: string
 
   @ManyToOne(() => Project, { onDelete: 'CASCADE', eager: true })
   @JoinColumn({ name: 'project_id' })
   project!: Project
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   instrumentId!: string
 
   @ManyToOne(() => Instrument, { onDelete: 'CASCADE', eager: true })

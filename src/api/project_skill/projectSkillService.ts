@@ -18,13 +18,13 @@ export class ProjectSkillService implements IProjectSkillService {
 
   createProjectSkills = async ({
     projectId,
-    skillIds,
+    skills,
     queryRunner
   }: ICreateProjectSkills) => {
     let code: ResponseCode = ResponseCode.OK
 
     try {
-      for (const skillId of skillIds) {
+      for (const skill of skills) {
         const insertResult = await this.projectSkillRepository
           .createQueryBuilder('projectSkill', queryRunner)
           .insert()
@@ -32,7 +32,8 @@ export class ProjectSkillService implements IProjectSkillService {
           .values([
             {
               projectId,
-              skillId
+              skillId: skill.id,
+              skillLevel: skill.skillLevel
             }
           ])
           .execute()

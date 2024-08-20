@@ -15,25 +15,21 @@ export class ChatController {
     const { id } = req.user
     const { chatMembersId } = res.locals.input
     const userIds = chatMembersId.push(id)
-    const { code } =
-      await this.chatService.createChat({
-        userIds
-      })
-    
+    const { code } = await this.chatService.createChat({
+      userIds
+    })
+
     return next({
       code
     })
   }
 
-  getChatsForUser = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
+  getChatsForUser = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.user
-    const { data, code } =
-      await this.chatService.getChatsForUser({ userId: id })
-    
+    const { data, code } = await this.chatService.getChatsForUser({
+      userId: id
+    })
+
     return next({
       data,
       code
@@ -42,10 +38,12 @@ export class ChatController {
 
   getChat = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.user
-    const { chatId } = res.locals.input 
-    const { chat, code } =
-      await this.chatService.getChatById({chatId, userId: id})
-    
+    const { chatId } = res.locals.input
+    const { chat, code } = await this.chatService.getChatById({
+      chatId,
+      userId: id
+    })
+
     return next({
       chat,
       code
@@ -58,21 +56,26 @@ export class ChatController {
     next: NextFunction
   ) => {
     const { id } = req.user
-    const { chatId } = res.locals.input 
-    const {  code } =
-      await this.chatService.markAsUnreadChatForUser({userId: id, chatId})
-    
+    const { chatId } = res.locals.input
+    const { code } = await this.chatService.markAsUnreadChatForUser({
+      userId: id,
+      chatId
+    })
+
     return next({
       code
     })
   }
 
-  deleteChatForUser = async (req: Request, res: Response, next: NextFunction) => {
+  deleteChatForUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     const { id } = req.user
-    const { chatId } = res.locals.input 
-    const {  code } =
-      await this.chatService.deleteChat({userId: id, chatId})
-    
+    const { chatId } = res.locals.input
+    const { code } = await this.chatService.deleteChat({ userId: id, chatId })
+
     return next({
       code
     })

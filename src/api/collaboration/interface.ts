@@ -19,6 +19,8 @@ export interface ICrateCollaboration {
   collaboratorId: string
   projectId: string
   amount: number
+  inDeadline: boolean
+  reasonToCollaborate: string
 }
 
 export interface IUpdateCollaboration {
@@ -26,9 +28,10 @@ export interface IUpdateCollaboration {
   ownerId: string
   profileHandle: string
   collaborationStatus: CollaborationStatus
+  inDeadline: boolean
 }
 
 export interface ICollaborationService {
-  createCollaboration(params: ICrateCollaboration): AsyncResponse<Collaboration>
+  createCollaboration(params: ICrateCollaboration): AsyncResponse<null>
   updateCollaboration(params: IUpdateCollaboration): AsyncResponse<ResponseCode>
 }

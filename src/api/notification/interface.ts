@@ -1,4 +1,4 @@
-import { AsyncResponse, ResponseCode } from '../../interface'
+import { AsyncResponse, IServiceMethod, ResponseCode } from '../../interface'
 import { Notification } from './notificationModel'
 
 export enum NotificationType {
@@ -10,7 +10,7 @@ export interface IDeleteNotificationEvent {
   notificationId: string
 }
 
-export interface ICreateNotification {
+export interface ICreateNotification extends IServiceMethod {
   senderId: string
   receiverId: string
   message: string

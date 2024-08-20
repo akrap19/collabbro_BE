@@ -6,14 +6,14 @@ export const createChatSchema = (req: Request) => {
     schema: Joi.object()
       .keys({
         chatMembersId: Joi.array()
-        .items(
-          Joi.string()
-            .regex(
-              /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/
-            )
-            .required()
-        )
-        .required(),
+          .items(
+            Joi.string()
+              .regex(
+                /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/
+              )
+              .required()
+          )
+          .required()
       })
       .options({ abortEarly: false }),
     input: {

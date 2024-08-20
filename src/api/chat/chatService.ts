@@ -5,7 +5,13 @@ import { autoInjectable, container } from 'tsyringe'
 import { AppDataSource } from '../../services/typeorm'
 import { Chat } from './chatModel'
 import { Repository } from 'typeorm'
-import { ICreateChat, IChatService, IGetChatById, IGetChatsForUser, IMarkAsUnreadChatForUser } from './interface'
+import {
+  ICreateChat,
+  IChatService,
+  IGetChatById,
+  IGetChatsForUser,
+  IMarkAsUnreadChatForUser
+} from './interface'
 import { ChatUserService } from '../chat_user/chatUserService'
 import { WebSocketService } from '../../services/websocket'
 
@@ -104,12 +110,12 @@ export class ChatService implements IChatService {
     return { code }
   }
 
-
   getChatsForUser = async ({ userId }: IGetChatsForUser) => {
     let code: ResponseCode = ResponseCode.OK
 
     try {
-      const { data, code: getChatUsersCode} = await chatUserService.getChatsForUser({userId})
+      const { data, code: getChatUsersCode } =
+        await chatUserService.getChatsForUser({ userId })
 
       return { data, code: getChatUsersCode }
     } catch (err: any) {
@@ -124,11 +130,15 @@ export class ChatService implements IChatService {
     return { code }
   }
 
-  markAsUnreadChatForUser = async ({ chatId, userId }: IMarkAsUnreadChatForUser) => {
+  markAsUnreadChatForUser = async ({
+    chatId,
+    userId
+  }: IMarkAsUnreadChatForUser) => {
     let code: ResponseCode = ResponseCode.OK
 
     try {
-      const {  code: markAsUnreadCode} = await chatUserService.markAsUnreadChatUser({chatId, userId})
+      const { code: markAsUnreadCode } =
+        await chatUserService.markAsUnreadChatUser({ chatId, userId })
 
       return { code: markAsUnreadCode }
     } catch (err: any) {
@@ -147,7 +157,10 @@ export class ChatService implements IChatService {
     let code: ResponseCode = ResponseCode.OK
 
     try {
-      const {  code: deleteChatUser} = await chatUserService.deleteChatUser({chatId, userId})
+      const { code: deleteChatUser } = await chatUserService.deleteChatUser({
+        chatId,
+        userId
+      })
 
       return { code: deleteChatUser }
     } catch (err: any) {

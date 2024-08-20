@@ -14,7 +14,7 @@ export class Chat {
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'uuid' })
   chatId!: string
 
   @OneToMany(() => Message, (message) => message.chat)

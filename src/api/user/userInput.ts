@@ -1,5 +1,6 @@
 import { Request } from 'express'
 import Joi from 'joi'
+import { SkillLevel } from './interface'
 
 export const finishOnboardingSchema = (req: Request) => {
   return {
@@ -8,7 +9,16 @@ export const finishOnboardingSchema = (req: Request) => {
         profileHandle: Joi.string().required(),
         country: Joi.string().required(),
         language: Joi.string().required(),
-        skills: Joi.array().items(Joi.string().optional()),
+        skills: Joi.array().items(
+          Joi.object()
+            .keys({
+              skill: Joi.string().required(),
+              skillLevel: Joi.string()
+                .valid(...Object.values(SkillLevel))
+                .required()
+            })
+            .optional()
+        ),
         professions: Joi.array().items(Joi.string().optional()),
         instruments: Joi.array().items(Joi.string().optional()),
         genres: Joi.array().items(Joi.string().optional()),

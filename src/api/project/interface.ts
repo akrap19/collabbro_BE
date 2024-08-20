@@ -2,6 +2,17 @@ import { AsyncResponse } from '../../interface'
 import { IMediaData, MediaInfo } from '../media/interface'
 import { Project } from './projectModel'
 
+export interface ISkillData {
+  id: string
+  skillLevel: SkillLevel
+}
+
+export enum SkillLevel {
+  BEGINNER = 'Begginer',
+  INTERMEDIATE = 'Seeking help',
+  ADVANCED = 'Advanced'
+}
+
 export enum ProjectType {
   COLLABOARTION = 'Collaboration',
   SEEKING_HELP = 'Seeking help'
@@ -28,7 +39,7 @@ export interface ICreateProject {
   currencyCode: string
   totalAmount: number
   instrumentIds: string[]
-  skillIds: string[]
+  skills: ISkillData[]
   mediaFiles: IMediaData[]
   profileHandle: string
 }

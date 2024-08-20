@@ -17,23 +17,20 @@ export class CollaborationController {
     next: NextFunction
   ) => {
     const { id } = req.user
-    const { projectId, amount } = res.locals.input
+    const { projectId, amount, inDeadline, reasonToCollaborate } =
+      res.locals.input
 
-    const { newCollaboration: collaboration, code } =
+    const { code: createCollaborationCode } =
       await this.collaborationService.createCollaboration({
         collaboratorId: id,
         projectId,
-        amount
+        amount,
+        inDeadline,
+        reasonToCollaborate
       })
-    if (!collaboration) {
-      return next({ code })
-    }
 
     return next({
-      data: {
-        collaboration
-      },
-      code: ResponseCode.OK
+      code: createCollaborationCode
     })
   }
 
@@ -43,13 +40,15 @@ export class CollaborationController {
     next: NextFunction
   ) => {
     const { id, profileHandle, email } = req.user
-    const { collaborationId, collaborationStatus } = res.locals.input
+    const { collaborationId, collaborationStatus, inDeadline } =
+      res.locals.input
 
     const { code } = await this.collaborationService.updateCollaboration({
       ownerId: id,
       collaborationId,
       collaborationStatus,
-      profileHandle: profileHandle ? profileHandle : email
+      profileHandle: profileHandle ? profileHandle : email,
+      inDeadline
     })
 
     return next({
